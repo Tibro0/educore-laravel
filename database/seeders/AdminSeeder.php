@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     {
         Admin::insert([
             [
-                'name' => 'Admin user',
+                'name' => 'Admin',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
