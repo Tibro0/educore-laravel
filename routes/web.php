@@ -1,13 +1,19 @@
 <?php
 
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\UserDashboardController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+/**
+ * Frontend Route Start
+ */
+Route::controller(FrontendController::class)->group(function () {
+    Route::get('', 'index')->name('home');
 });
+/**
+ * Frontend Route End
+ */
 
 /**
  * -------------------------------------------------------------------------------------------------
