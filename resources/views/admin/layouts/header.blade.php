@@ -54,7 +54,7 @@
 
                     <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
-                        <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"
+                        <a href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();"
                             class="dropdown-item text-danger">
                             <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout
                         </a>
