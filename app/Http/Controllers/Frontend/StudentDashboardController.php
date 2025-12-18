@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UserDashboardController extends Controller
+class StudentDashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        return view('frontend.student-dashboard.dashboard.index');
     }
 }
