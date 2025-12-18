@@ -5,11 +5,19 @@ use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
+//////////////////////////////////
+Route::get('tibro', function () {
+    // return session()->flush();
+    return session()->all();
+});
+////////////////////////////////
+
 /**
  * Frontend Route Start
  */
 Route::controller(FrontendController::class)->group(function () {
     Route::get('', 'index')->name('home');
+    Route::get('frontend-register-list-style', 'frontendRegisterListStyle')->name('frontend-register-list-style');
 });
 /**
  * Frontend Route End
