@@ -101,7 +101,7 @@
             <div class="col-xxl-5 col-xl-6 col-lg-6 wow fadeInLeft">
                 <div class="wsus__sign_img">
                     <img src="{{ asset('frontend/assets/images/login_img_2.jpg') }}" alt="login" class="img-fluid">
-                    <a href="index.html">
+                    <a href="{{ route('home') }}">
                         <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="EduCore" class="img-fluid">
                     </a>
                 </div>
@@ -127,47 +127,68 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade {{ Session::has('frontend_register_list_style') && Session::get('frontend_register_list_style') == 'student' ? 'show active' : '' }} {{ !Session::has('frontend_register_list_style') ? 'show active' : '' }}"
                             id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                            <form action="#">
+
+                            <form action="{{ route('register') }}" method="POST">
+                                @csrf
                                 <h2>Sign Up<span>!</span></h2>
-                                <p class="new_user">Already have an account? <a href="sign_in.html">Sign In</a></p>
+                                <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign
+                                        In</a></p>
                                 <div class="row">
+
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>First name</label>
-                                            <input type="text" placeholder="First name">
+                                            <label>
+                                                <div>Name <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="text" placeholder="First name" name="name"
+                                                value="{{ old('name') }}"
+                                                class="@error('name') border border-danger @enderror">
+                                            @error('name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Last name</label>
-                                            <input type="text" placeholder="Last name">
+                                            <label>
+                                                <div>Your Email <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="email" placeholder="Your email" name="email"
+                                                value="{{ old('email') }}"
+                                                class="@error('email') border border-danger @enderror">
+                                            @error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Your email</label>
-                                            <input type="email" placeholder="Your email">
+                                            <label>
+                                                <div>Password <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="password" placeholder="Your password" name="password"
+                                                class="@error('password') border border-danger @enderror">
+                                            @error('password')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Password</label>
-                                            <input type="password" placeholder="Your password">
+                                            <label>
+                                                <div>Confirm Password <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="password" placeholder="Your password"
+                                                name="password_confirmation"
+                                                class="@error('password_confirmation') border border-danger @enderror">
+                                            @error('password_confirmation')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault"> By clicking
-                                                    Create
-                                                    account, I agree that I have read and accepted the <a
-                                                        href="#">Terms
-                                                        of
-                                                        Use</a> and <a href="#">Privacy Policy.</a>
-                                                </label>
-                                            </div>
+
                                             <button type="submit" class="common_btn">Sign Up</button>
                                         </div>
                                     </div>
@@ -228,7 +249,7 @@
                 </div>
             </div>
         </div>
-        <a class="back_btn" href="index.html">Back to Home</a>
+        <a class="back_btn" href="{{ route('home') }}">Back to Home</a>
     </section>
     <!--===========================SIGN UP END============================-->
 
