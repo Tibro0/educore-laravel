@@ -74,7 +74,7 @@
                         <div class="tab-pane fade {{ Session::has('frontend_register_list_style') && Session::get('frontend_register_list_style') == 'student' ? 'show active' : '' }} {{ !Session::has('frontend_register_list_style') ? 'show active' : '' }}"
                             id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
 
-                            <form action="{{ route('register') }}" method="POST">
+                            <form action="{{ route('register', ['type' => 'student']) }}" method="POST">
                                 @csrf
                                 <h2>Sign Up<span>!</span></h2>
                                 <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign
@@ -144,47 +144,78 @@
 
                         <div class="tab-pane fade {{ Session::has('frontend_register_list_style') && Session::get('frontend_register_list_style') == 'instructor' ? 'show active' : '' }}"
                             id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                            <form action="#">
-                                <h2>Sign Up<span>!</span></h2>
-                                <p class="new_user">Already have an account? <a href="sign_in.html">Sign In</a></p>
+                            <form action="{{ route('register', ['type' => 'instructor']) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <h2>Instructor Sign Up<span>!</span></h2>
+                                <p class="new_user">Already have an account? <a href="{{ route('login') }}">Sign
+                                        In</a></p>
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>First name</label>
-                                            <input type="text" placeholder="First name">
+                                            <label>
+                                                <div>Name <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="text" placeholder="Name" name="name"
+                                                class="@error('name') border border-danger @enderror">
+                                            @error('name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="wsus__login_form_input">
+                                            <label>
+                                                <div>Your Email <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="email" placeholder="Your Email" name="email"
+                                                class="@error('email') border border-danger @enderror">
+                                            @error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Last name</label>
-                                            <input type="text" placeholder="Last name">
+                                            <label>
+                                                <div>Document <span class="text-danger">* Maximum 3MB</span>
+                                                    (Education/Certificate)</div>
+                                            </label>
+                                            <input type="file" placeholder="Document" name="document"
+                                                class="@error('document') border border-danger @enderror">
+                                            @error('document')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Your email</label>
-                                            <input type="email" placeholder="Your email">
+                                            <label>
+                                                <div>Password <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="password" placeholder="Password" name="password"
+                                                class="@error('password') border border-danger @enderror">
+                                            @error('password')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <label>Password</label>
-                                            <input type="password" placeholder="Your password">
+                                            <label>
+                                                <div>Confirm Password <span class="text-danger">*</span></div>
+                                            </label>
+                                            <input type="password" placeholder="Confirm Password"
+                                                name="password_confirmation"
+                                                class="@error('password_confirmation') border border-danger @enderror">
+                                            @error('password_confirmation')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__login_form_input">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault1">
-                                                <label class="form-check-label" for="flexCheckDefault1"> By clicking
-                                                    Create
-                                                    account, I agree that I have read and accepted the <a
-                                                        href="#">Terms
-                                                        of
-                                                        Use</a> and <a href="#">Privacy Policy.</a>
-                                                </label>
-                                            </div>
                                             <button type="submit" class="common_btn">Sign Up</button>
                                         </div>
                                     </div>
