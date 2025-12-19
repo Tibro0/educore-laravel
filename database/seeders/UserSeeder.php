@@ -17,21 +17,23 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
+                'role' => 'student',
                 'name' => 'Student',
                 'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'role' => 'student',
+                'approve_status' => 'approved',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
+                'role' => 'instructor',
                 'name' => 'Instructor',
                 'email' => 'instructor@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'role' => 'instructor',
+                'approve_status' => 'approved',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),

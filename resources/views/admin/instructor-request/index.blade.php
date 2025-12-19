@@ -62,12 +62,15 @@
                                             class="status-{{ $item->id }}">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status" class="form-select"
+                                            <select name="status" class="form-select @error('status')is-invalid @enderror"
                                                 onchange="$('.status-{{ $item->id }}').submit()">
                                                 <option @selected($item->approve_status === 'pending') value="pending">Pending</option>
                                                 <option @selected($item->approve_status === 'approved') value="approved">Approve</option>
                                                 <option @selected($item->approve_status === 'rejected') value="rejected">Reject</option>
                                             </select>
+                                            @error('status')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </form>
                                     </td>
                                 </tr>
