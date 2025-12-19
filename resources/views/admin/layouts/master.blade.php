@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page-title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
@@ -13,6 +14,7 @@
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('admin/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/libs/toastr/build/toastr.min.css') }}">
     @stack('css-link')
 </head>
 
@@ -63,6 +65,30 @@
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/app.js') }}"></script>
+    <!-- toastr plugin -->
+    <script src="{{ asset('admin/assets/libs/toastr/build/toastr.min.js') }}"></script>
+    <!-- toastr init -->
+    <script src="{{ asset('admin/assets/js/pages/toastr.init.js') }}"></script>
+    <script>
+        // Display toast messages from session with nullable titles
+        @if (Session::has('toast'))
+            @php
+                $toast = Session::get('toast');
+            @endphp
+            @if (!empty($toast['title']))
+                toastr.{{ $toast['type'] }}('{{ $toast['message'] }}', '{{ $toast['title'] }}');
+            @else
+                toastr.{{ $toast['type'] }}('{{ $toast['message'] }}');
+            @endif
+        @endif
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     @stack('js-link')
 </body>
 
