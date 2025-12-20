@@ -29,6 +29,9 @@
     <!--===========================DASHBOARD OVERVIEW START============================-->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
+            <div class="text-end">
+                <a href="{{ route('student.become-instructor') }}" class="common_btn">Become a Instructor</a>
+            </div>
             <div class="row">
                 @include('frontend.student-dashboard.sidebar')
                 <div class="col-xl-9 col-md-8">

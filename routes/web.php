@@ -29,7 +29,12 @@ Route::controller(FrontendController::class)->group(function () {
  * -------------------------------------------------------------------------------------------------
  */
 Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:student'], 'prefix' => 'student', 'as' => 'student.'], function () {
-    Route::get('dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+    /** Student Dashboard Route */
+    Route::controller(StudentDashboardController::class)->group(function () {
+        Route::get('dashboard', 'index')->name('dashboard');
+        Route::get('become-instructor', 'becomeInstructor')->name('become-instructor');
+        Route::post('become-instructor/{user}', 'becomeInstructorUpdate')->name('become-instructor.update');
+    });
 });
 /**
  * ----------------------------------------------------------------------------------------------------
@@ -43,7 +48,10 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:student'], 'pr
  * ----------------------------------------------------------------------------------------------------
  */
 Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 'prefix' => 'instructor', 'as' => 'instructor.'], function () {
-    Route::get('dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
+    /** Instructor Dashboard Route */
+    Route::controller(InstructorDashboardController::class)->group(function () {
+        Route::get('dashboard', 'index')->name('dashboard');
+    });
 });
 /**
  * ---------------------------------------------------------------------------------------------------
