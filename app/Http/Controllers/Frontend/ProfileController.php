@@ -16,6 +16,11 @@ class ProfileController extends Controller
         return view('frontend.student-dashboard.profile.index');
     }
 
+    public function instructorIndex()
+    {
+        return view('frontend.instructor-dashboard.profile.index');
+    }
+
     public function profileUpdate(Request $request)
     {
         $request->validate([

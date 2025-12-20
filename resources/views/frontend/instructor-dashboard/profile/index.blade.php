@@ -1,0 +1,261 @@
+@extends('frontend.layouts.master')
+
+@section('page-title')
+    EduCore | Instructor Profile
+@endsection
+
+@push('css-link')
+    <style>
+        select.form-select {
+            padding: 12px 20px;
+            margin-top: 5px
+        }
+    </style>
+@endpush
+
+@section('content')
+    <!--===========================BREADCRUMB START============================-->
+    <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
+        <div class="wsus__breadcrumb_overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 wow fadeInUp">
+                        <div class="wsus__breadcrumb_text">
+                            <h1>Instructor Profile Update</h1>
+                            <ul>
+                                <li><a href="{{ route('home') }}">Home</a></li>
+                                <li>Instructor Profile Update</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--===========================BREADCRUMB END============================-->
+    <!--===========================DASHBOARD OVERVIEW START============================-->
+    <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
+        <div class="container">
+            <div class="row">
+                @include('frontend.instructor-dashboard.sidebar')
+                <div class="col-xl-9 col-md-8 wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">
+                    <div class="wsus__dashboard_contant">
+                        <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                            <div class="wsus__dashboard_heading">
+                                <h5>Update Your Information</h5>
+                                <p>Manage your courses and its update like live, draft and insight.</p>
+                            </div>
+                        </div>
+                        <form action="{{ route('instructor.profile.update') }}" method="POST"
+                            class="wsus__dashboard_profile_update" enctype="multipart/form-data">
+                            @csrf
+                            <div class="wsus__dashboard_profile wsus__dashboard_profile_avatar">
+                                <div class="img">
+                                    <img src="{{ asset(Auth::user()->image) }}" alt="profile" class="img-fluid w-100">
+                                    <label for="profile_photo">
+                                        <img src="{{ asset('frontend/assets/images/dash_camera.png') }}" alt="camera"
+                                            class="img-fluid w-100">
+                                    </label>
+                                    <input type="file" id="profile_photo" name="avatar" hidden="">
+                                </div>
+                                <div class="text">
+                                    <h6>Your avatar</h6>
+                                    <p>PNG or JPG no bigger than 400px wide and tall.</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                                        <input type="text" placeholder="Enter your name" name="name"
+                                            value="{{ Auth::user()->name }}"
+                                            class="@error('name') border border-danger @enderror">
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Headline</label>
+                                        <input type="text" placeholder="Enter your headline" name="heading"
+                                            value="{{ Auth::user()->headline }}"
+                                            class="@error('heading') border border-danger @enderror">
+                                        @error('heading')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="text" placeholder="Enter your email" name="email"
+                                            value="{{ Auth::user()->email }}"
+                                            class="@error('email') border border-danger @enderror">
+                                        @error('email')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="wsus__dashboard_profile_update_info ">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select" name="gender"
+                                            class="@error('gender') border border-danger @enderror">
+                                            <option value="">Select a Gender</option>
+                                            <option @selected(Auth::user()->gender == 'male') value="male">Male</option>
+                                            <option @selected(Auth::user()->gender == 'female') value="female">Female</option>
+                                        </select>
+                                        @error('gender')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">About Me</label>
+                                        <textarea rows="7" placeholder="Your text here" name="about"
+                                            class="@error('about') border border-danger @enderror">{{ Auth::user()->bio }}</textarea>
+                                        @error('about')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_btn">
+                                        <button type="submit" class="common_btn">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="wsus__dashboard_contant">
+                        <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                            <div class="wsus__dashboard_heading">
+                                <h5>Update Your Email/Password</h5>
+                                <p>Add your new email or password here to update.</p>
+                            </div>
+
+                        </div>
+                        <form action="{{ route('instructor.profile.update-password') }}" method="POST"
+                            class="wsus__dashboard_profile_update">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Current Password <span
+                                                class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your current password"
+                                            name="current_password"
+                                            class="@error('current_password') border border-danger @enderror">
+                                        @error('current_password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your password" name="password"
+                                            class="@error('password') border border-danger @enderror">
+                                        @error('password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Confirm Password <span
+                                                class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your confirm password"
+                                            name="password_confirmation"
+                                            class="@error('password_confirmation') border border-danger @enderror">
+                                        @error('password_confirmation')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_btn">
+                                        <button type="submit" class="common_btn">Update Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="wsus__dashboard_contant">
+                        <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                            <div class="wsus__dashboard_heading">
+                                <h5>Update Social Information</h5>
+                                <p>Put your social links here.</p>
+                            </div>
+                        </div>
+                        <form action="{{ route('instructor.profile.update-social') }}" method="POST"
+                            class="wsus__dashboard_profile_update">
+                            @csrf
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label>Facebook</label>
+                                        <input type="text" placeholder="Enter your facebook url" name="facebook"
+                                            value="{{ Auth::user()->facebook }}"
+                                            class="@error('facebook') border border-banger @enderror">
+                                        @error('facebook')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label>X</label>
+                                        <input type="text" placeholder="Enter your x url" name="x"
+                                            value="{{ Auth::user()->x }}"
+                                            class="@error('x') border border-banger @enderror">
+                                        @error('x')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label>Linkedin</label>
+                                        <input type="text" placeholder="Enter your linkedin url" name="linkedin"
+                                            value="{{ Auth::user()->linkedin }}"
+                                            class="@error('linkedin') border border-banger @enderror">
+                                        @error('linkedin')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label>website</label>
+                                        <input type="text" placeholder="Enter your website url" name="website"
+                                            value="{{ Auth::user()->website }}"
+                                            class="@error('website') border border-banger @enderror">
+                                        @error('website')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_btn">
+                                        <button type="submit" class="common_btn">Update Socials</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--===========================DASHBOARD OVERVIEW END============================-->
+@endsection

@@ -61,6 +61,14 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 
     Route::controller(InstructorDashboardController::class)->group(function () {
         Route::get('dashboard', 'index')->name('dashboard');
     });
+
+    /** Profile Routes */
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('profile', 'instructorIndex')->name('profile.index');
+        Route::post('profile/update', 'profileUpdate')->name('profile.update');
+        Route::post('profile/update-password', 'updatePassword')->name('profile.update-password');
+        Route::post('profile/update-social', 'updateSocial')->name('profile.update-social');
+    });
 });
 /**
  * ---------------------------------------------------------------------------------------------------
