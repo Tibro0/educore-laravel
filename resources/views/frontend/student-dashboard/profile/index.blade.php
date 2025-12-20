@@ -4,6 +4,15 @@
     EduCore | Student Profile
 @endsection
 
+@push('css-link')
+    <style>
+        select.form-select {
+            padding: 12px 20px;
+            margin-top: 5px
+        }
+    </style>
+@endpush
+
 @section('content')
     <!--===========================BREADCRUMB START============================-->
     <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
@@ -58,7 +67,7 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
-                                        <label class="form-label">Full Name</label>
+                                        <label class="form-label">Full Name <span class="text-danger">*</span></label>
                                         <input type="text" placeholder="Enter your name" name="name"
                                             value="{{ Auth::user()->name }}"
                                             class="@error('name') border border-danger @enderror">
@@ -80,7 +89,7 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="wsus__dashboard_profile_update_info">
-                                        <label class="form-label">Email</label>
+                                        <label class="form-label">Email <span class="text-danger">*</span></label>
                                         <input type="text" placeholder="Enter your email" name="email"
                                             value="{{ Auth::user()->email }}"
                                             class="@error('email') border border-danger @enderror">
@@ -92,7 +101,7 @@
                                 <div class="col-xl-6">
                                     <div class="wsus__dashboard_profile_update_info ">
                                         <label class="form-label">Gender</label>
-                                        <select class="form-control py-3" name="gender"
+                                        <select class="form-select" name="gender"
                                             class="@error('gender') border border-danger @enderror">
                                             <option value="">Select a Gender</option>
                                             <option @selected(Auth::user()->gender == 'male') value="male">Male</option>
@@ -122,8 +131,65 @@
                         </form>
                     </div>
 
-                </div>
+                    <div class="wsus__dashboard_contant">
+                        <div class="wsus__dashboard_contant_top d-flex flex-wrap justify-content-between">
+                            <div class="wsus__dashboard_heading">
+                                <h5>Update Your Email/Password</h5>
+                                <p>Add your new email or password here to update.</p>
+                            </div>
 
+                        </div>
+                        <form action="{{ route('student.profile.update-password') }}" method="POST"
+                            class="wsus__dashboard_profile_update">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Current Password <span
+                                                class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your current password"
+                                            name="current_password"
+                                            class="@error('current_password') border border-danger @enderror">
+                                        @error('current_password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your password" name="password"
+                                            class="@error('password') border border-danger @enderror">
+                                        @error('password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wsus__dashboard_profile_update_info">
+                                        <label class="form-label">Confirm Password <span
+                                                class="text-danger">*</span></label>
+                                        <input type="password" placeholder="Enter your confirm password"
+                                            name="password_confirmation"
+                                            class="@error('password_confirmation') border border-danger @enderror">
+                                        @error('password_confirmation')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-xl-12">
+                                    <div class="wsus__dashboard_profile_update_btn">
+                                        <button type="submit" class="common_btn">Update Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
