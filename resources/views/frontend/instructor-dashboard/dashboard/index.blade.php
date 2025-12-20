@@ -38,7 +38,7 @@
                             mail on your email when it will be approved.
                         </div>
                     @endif
-                    @if (Auth::user()->role != 'instructor')
+                    @if (user()->role != 'instructor')
                         <div class="text-end">
                             <a href="{{ route('student.become-instructor') }}" class="btn btn-primary">Become a
                                 Instructor</a>
