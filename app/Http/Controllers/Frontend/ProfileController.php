@@ -66,4 +66,27 @@ class ProfileController extends Controller
             'message' => 'Updated Successfully!'
         ]);
     }
+
+    public function updateSocial(Request $request)
+    {
+        $request->validate([
+            'facebook' => ['nullable', 'url', 'max:255'],
+            'x' => ['nullable', 'url', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+        ]);
+
+        $user = Auth::user();
+        $user->facebook = $request->facebook;
+        $user->x = $request->x;
+        $user->linkedin = $request->linkedin;
+        $user->website = $request->website;
+        $user->save();
+
+        return redirect()->back()->with('toast', [
+            'type' => 'success',
+            'title' => 'Success',
+            'message' => 'Updated Successfully!'
+        ]);
+    }
 }
