@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
         Route::put('instructor-requests/{instructor_request}', 'update')->name('instructor-requests.update');
     });
 
-    /** Brand Route */
+    /** Course Language Route */
     Route::controller(CourseLanguageController::class)->group(function () {
         Route::get('course-languages', 'index')->name('course-languages.index');
         Route::get('course-languages/create', 'create')->name('course-languages.create');
@@ -82,6 +82,5 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
         Route::get('course-languages/edit/{id}', 'edit')->name('course-languages.edit');
         Route::put('course-languages/{id}', 'update')->name('course-languages.update');
         Route::delete('course-languages/{id}', 'destroy')->name('course-languages.destroy');
-        Route::put('course-languages-change-status', 'changeStatus')->name('course-languages.change-status');
     });
 });
