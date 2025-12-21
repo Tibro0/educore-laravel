@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('page-title')
-    Admin | Course Language
+    Admin | Course Level
 @endsection
 
 @section('content')
@@ -10,21 +10,20 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Create Course Language</h4>
+                        <h4 class="mb-0">Create Course Level</h4>
                         <div>
-                            <a href="{{ route('admin.course-languages.index') }}"
-                                class="btn btn-primary px-5 rounded">Back</a>
+                            <a href="{{ route('admin.course-levels.index') }}" class="btn btn-primary px-5 rounded">Back</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.course-languages.store') }}" method="POST">
+                    <form action="{{ route('admin.course-levels.store') }}" method="POST">
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label class="form-label">Name <span class="text-danger">*</span></label>
-                                <input type="text" name="name" value="{{old('name')}}" placeholder="Enter Language Name"
-                                    class="form-control @error('name') is-invalid @enderror">
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    placeholder="Enter Level Name" class="form-control @error('name') is-invalid @enderror">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

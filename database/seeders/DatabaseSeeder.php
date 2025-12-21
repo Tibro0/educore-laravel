@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             CourseLanguageSeeder::class,
+            CourseLevelSeeder::class,
         ]);
     }
 }

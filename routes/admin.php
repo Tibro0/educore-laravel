@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CourseLanguageController;
+use App\Http\Controllers\Admin\CourseLevelController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
 use Illuminate\Support\Facades\Route;
@@ -74,7 +75,7 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
         Route::put('instructor-requests/{instructor_request}', 'update')->name('instructor-requests.update');
     });
 
-    /** Course Language Route */
+    /** Course Languages Route */
     Route::controller(CourseLanguageController::class)->group(function () {
         Route::get('course-languages', 'index')->name('course-languages.index');
         Route::get('course-languages/create', 'create')->name('course-languages.create');
@@ -82,5 +83,15 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
         Route::get('course-languages/edit/{id}', 'edit')->name('course-languages.edit');
         Route::put('course-languages/{id}', 'update')->name('course-languages.update');
         Route::delete('course-languages/{id}', 'destroy')->name('course-languages.destroy');
+    });
+
+    /** Course Levels Route */
+    Route::controller(CourseLevelController::class)->group(function () {
+        Route::get('course-levels', 'index')->name('course-levels.index');
+        Route::get('course-levels/create', 'create')->name('course-levels.create');
+        Route::post('course-levels/store', 'store')->name('course-levels.store');
+        Route::get('course-levels/edit/{id}', 'edit')->name('course-levels.edit');
+        Route::put('course-levels/{id}', 'update')->name('course-levels.update');
+        Route::delete('course-levels/{id}', 'destroy')->name('course-levels.destroy');
     });
 });
