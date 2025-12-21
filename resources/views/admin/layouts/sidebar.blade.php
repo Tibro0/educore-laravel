@@ -2,14 +2,14 @@
     <!-- Left Menu Start -->
     <ul class="metismenu list-unstyled" id="side-menu">
         <li class="menu-title">Menu</li>
-        <li class="{{adminSidebarActive(['admin.dashboard'])}}">
+        <li class="{{ adminSidebarActive(['admin.dashboard']) }}">
             <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                 <i class="ri-dashboard-line"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
-        <li class="{{adminSidebarActive(['admin.instructor-requests.index'])}}">
+        <li class="{{ adminSidebarActive(['admin.instructor-requests.index']) }}">
             <a href="{{ route('admin.instructor-requests.index') }}" class="waves-effect">
                 <i class="ri-dashboard-line"></i>
                 <span>Instructor Requests</span>
@@ -22,8 +22,12 @@
                 <span>Course Management</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li class="{{adminSidebarActive(['admin.course-languages.*'])}}"><a href="{{route('admin.course-languages.index')}}">Course Languages</a></li>
-                <li class="{{adminSidebarActive(['admin.course-levels.*'])}}"><a href="{{route('admin.course-levels.index')}}">Course Levels</a></li>
+                <li class="{{ adminSidebarActive(['admin.course-categories.*']) }}"><a
+                        href="{{ route('admin.course-categories.index') }}">Course Categories</a></li>
+                <li class="{{ adminSidebarActive(['admin.course-languages.*']) }}"><a
+                        href="{{ route('admin.course-languages.index') }}">Course Languages</a></li>
+                <li class="{{ adminSidebarActive(['admin.course-levels.*']) }}"><a
+                        href="{{ route('admin.course-levels.index') }}">Course Levels</a></li>
             </ul>
         </li>
 

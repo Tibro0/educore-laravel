@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseLevelController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -93,5 +94,15 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
         Route::get('course-levels/edit/{id}', 'edit')->name('course-levels.edit');
         Route::put('course-levels/{id}', 'update')->name('course-levels.update');
         Route::delete('course-levels/{id}', 'destroy')->name('course-levels.destroy');
+    });
+
+    /** Course Categories Route */
+    Route::controller(CourseCategoryController::class)->group(function () {
+        Route::get('course-categories', 'index')->name('course-categories.index');
+        Route::get('course-categories/create', 'create')->name('course-categories.create');
+        Route::post('course-categories/store', 'store')->name('course-categories.store');
+        Route::get('course-categories/edit/{id}', 'edit')->name('course-categories.edit');
+        Route::put('course-categories/{id}', 'update')->name('course-categories.update');
+        Route::delete('course-categories/{id}', 'destroy')->name('course-categories.destroy');
     });
 });
