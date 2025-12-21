@@ -1,0 +1,41 @@
+@extends('admin.layouts.master')
+
+@section('page-title')
+    Admin | Course Language
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Create Course Language</h4>
+                        <div>
+                            <a href="{{ route('admin.course-languages.index') }}"
+                                class="btn btn-primary px-5 rounded">Back</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.course-languages.store') }}" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" placeholder="Enter Language Name"
+                                    class="form-control @error('name') is-invalid @enderror">
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary px-5" type="submit">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+@endsection
