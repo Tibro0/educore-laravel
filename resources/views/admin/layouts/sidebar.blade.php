@@ -22,7 +22,7 @@
                 <span>Course Management</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li class="{{ adminSidebarActive(['admin.course-categories.*']) }}"><a
+                <li class="{{ adminSidebarActive(['admin.course-categories.*', 'admin.course-sub-categories.*']) }}"><a
                         href="{{ route('admin.course-categories.index') }}">Course Categories</a></li>
                 <li class="{{ adminSidebarActive(['admin.course-languages.*']) }}"><a
                         href="{{ route('admin.course-languages.index') }}">Course Languages</a></li>

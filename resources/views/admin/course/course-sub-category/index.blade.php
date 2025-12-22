@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('page-title')
-    Admin | Course Category
+    Admin | Course Sub Category
 @endsection
 
 @push('css-link')
@@ -18,10 +18,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">All Course Categories</h4>
+                        <h4 class="mb-0">Course Sub Category of ({{ $categories->name }})</h4>
                         <div>
-                            <a href="{{ route('admin.course-categories.create') }}"
-                                class="btn btn-primary px-5 rounded">Create New</a>
+                            <a href="{{route('admin.course-categories.index')}}" class="btn btn-primary px-5 rounded">Back</a>
+                            <a href="{{ route('admin.course-sub-categories.create', $categories->id) }}"
+                                class="btn btn-primary px-5">Create New</a>
                         </div>
                     </div>
                 </div>
@@ -33,24 +34,16 @@
                                 <th>SL</th>
                                 <th>Icon</th>
                                 <th>Name</th>
-                                <th>Treading</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $item)
+                            @foreach ($subCategories as $item)
                                 <tr>
                                     <td width="50">{{ $loop->iteration }}</td>
                                     <td><img src="{{ asset($item->image) }}"></td>
                                     <td>{{ $item->name }}</td>
-                                    <td>
-                                        @if ($item->show_at_trending == 1)
-                                            <span class="badge bg-primary">Yes</span>
-                                        @elseif ($item->show_at_trending == 0)
-                                            <span class="badge bg-danger">No</span>
-                                        @endif
-                                    </td>
                                     <td>
                                         @if ($item->status == 1)
                                             <span class="badge bg-primary">Yes</span>
@@ -59,11 +52,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.course-sub-categories.index', $item->id) }}"
-                                            class="btn btn-warning text-white"><i class=" fas fa-align-justify"></i></a>
-                                        <a href="{{ route('admin.course-categories.edit', $item->id) }}"
+                                        <a href="{{ route('admin.course-sub-categories.edit', ['categoryId' =>$categories->id, 'subCategoryId' => $item->id ]) }}"
                                             class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="{{ route('admin.course-categories.destroy', $item->id) }}" id="delete"
+                                        <a href="{{ route('admin.course-sub-categories.destroy', $item->id) }}" id="delete"
                                             class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
