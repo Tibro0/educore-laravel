@@ -16,7 +16,7 @@ class CourseCategoryController extends Controller
      */
     public function index()
     {
-        $categories = CourseCategory::whereNull('parent_id')->get();
+        $categories = CourseCategory::whereNull('parent_id')->orderBy('id', 'DESC')->get();
         return view('admin.course.course-category.index', compact('categories'));
     }
 

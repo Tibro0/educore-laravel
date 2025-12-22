@@ -17,7 +17,7 @@ class CourseSubCategoryController extends Controller
     public function index(Request $request, string $categoryId)
     {
         $categories = CourseCategory::findOrFail($categoryId);
-        $subCategories = CourseCategory::where(['parent_id' => $categoryId])->get();
+        $subCategories = CourseCategory::where(['parent_id' => $categoryId])->orderBy('id', 'DESC')->get();
         return view('admin.course.course-sub-category.index', compact('categories', 'subCategories'));
     }
 
