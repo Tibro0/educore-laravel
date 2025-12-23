@@ -27,7 +27,17 @@
                         <img src="{{ asset('frontend/assets/images/dash_icon_8.png') }}" alt="icon"
                             class="img-fluid w-100">
                     </div>
-                    Profile
+                    Instructor Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('instructor.courses.index') }}" class="{{ setActive(['instructor.courses.*']) }}">
+                    <div class="img">
+                        <img src="{{ asset('frontend/assets/images/dash_icon_8.png') }}" alt="icon"
+                            class="img-fluid w-100">
+                    </div>
+                    Courses
                 </a>
             </li>
 
