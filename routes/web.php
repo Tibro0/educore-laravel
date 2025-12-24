@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 
     Route::controller(CourseController::class)->group(function () {
         Route::get('courses', 'index')->name('courses.index');
         Route::get('courses/create', 'create')->name('courses.create');
+        Route::post('courses/create', 'storeBasicInfo')->name('courses.sore-basic-info');
+        Route::get('courses/edit/{id}', 'edit')->name('courses.edit');
     });
 });
 /**
