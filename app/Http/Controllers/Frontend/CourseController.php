@@ -18,7 +18,8 @@ class CourseController extends Controller
     use ImageUploadTrait;
     public function index()
     {
-        return view('frontend.instructor-dashboard.course.index');
+        $courses = Course::where(['instructor_id' => Auth::user()->id])->orderBy('id', 'DESC')->get();
+        return view('frontend.instructor-dashboard.course.index', compact('courses'));
     }
 
     public function create()
@@ -68,14 +69,16 @@ class CourseController extends Controller
     {
         switch ($request->step) {
             case '1':
-
+                $course = Course::findOrFail($request->id);
+                return view('frontend.instructor-dashboard.course.edit', compact('course'));
                 break;
 
             case '2':
                 $categories = CourseCategory::where(['status' => 1])->orderBy('id', 'DESC')->get();
                 $levels = CourseLevel::orderBy('id', 'DESC')->get();
                 $languages = CourseLanguage::orderBy('id', 'DESC')->get();
-                return view('frontend.instructor-dashboard.course.more-info', compact('categories', 'levels', 'languages'));
+                $course = Course::findOrFail($request->id);
+                return view('frontend.instructor-dashboard.course.more-info', compact('categories', 'levels', 'languages', 'course'));
                 break;
         }
     }
@@ -84,7 +87,41 @@ class CourseController extends Controller
     {
         switch ($request->current_step) {
             case '1':
-                # code...
+                $request->validate([
+                    'title' => ['required', 'max:255', 'string'],
+                    'seo_description' => ['nullable', 'max:255', 'string'],
+                    'demo_video_storage' => ['nullable', 'in:youtube,vimeo,external_link,upload', 'string'],
+                    'price' => ['required', 'numeric'],
+                    'discount' => ['nullable', 'numeric'],
+                    'description' => ['required'],
+                    'thumbnail' => ['nullable', 'image', 'max:2048', 'dimensions:width=305,height=200'],
+                    'demo_video_source' => ['nullable']
+                ]);
+
+                $course = Course::findOrFail($request->id);
+
+                $thumbnailPath = $this->updateImage($request, 'thumbnail', 'uploads/course_thumbnail_image', $course->thumbnail);
+
+                $course->title = $request->title;
+                $course->slug = Str::slug($request->title);
+                $course->seo_description = $request->seo_description;
+                $course->thumbnail = empty(!$thumbnailPath) ? $thumbnailPath : $course->thumbnail;
+                $course->demo_video_storage = $request->demo_video_storage;
+                $course->demo_video_source = $request->demo_video_source;
+                $course->price = $request->price;
+                $course->discount = $request->discount;
+                $course->description = $request->description;
+                $course->instructor_id = Auth::guard('web')->user()->id;
+                $course->save();
+
+                // Save Course id on Session
+                Session::put('course_create_id', $course->id);
+
+                return response([
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'redirect' => route('instructor.courses.edit', ['id' => $course->id, 'step' => $request->next_step])
+                ]);
                 break;
 
             case '2':

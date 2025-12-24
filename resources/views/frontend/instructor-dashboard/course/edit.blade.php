@@ -2,10 +2,11 @@
 
 @section('course_content')
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-        <div class="add_course_basic_info course-form">
-            <form action="{{ route('instructor.courses.sore-basic-info') }}" method="POST" class="basic_info_form course-form"
+        <div class="add_course_basic_info">
+            <form action="{{ route('instructor.courses.update') }}" method="POST" class="basic_info_update_form course-form"
                 enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="id" value="{{ $course->id }}">
                 <input type="hidden" name="current_step" value="1">
                 <input type="hidden" name="next_step" value="2">
                 <div class="row">
@@ -13,6 +14,7 @@
                         <div class="add_course_basic_info_imput">
                             <label>Title <code>*</code></label>
                             <input type="text" placeholder="Title" name="title"
+                                value="{{ old('title') ?? $course->title }}"
                                 class="@error('title') border border-danger @enderror">
                             @error('title')
                                 <div class="text-danger">{{ $message }}</div>
@@ -23,15 +25,16 @@
                         <div class="add_course_basic_info_imput">
                             <label>Seo description</label>
                             <input type="text" placeholder="Seo description" name="seo_description"
+                                value="{{ old('seo_description') ?? $course->seo_description }}"
                                 class="@error('seo_description') border border-danger @enderror">
                             @error('seo_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="col-xl-12">
+                    <div class="col-xl-10">
                         <div class="add_course_basic_info_imput">
-                            <label>Thumbnail <code>*</code></label>
+                            <label>Thumbnail</label>
                             <input type="file" name="thumbnail"
                                 class="@error('thumbnail') border border-danger @enderror">
                             @error('thumbnail')
@@ -39,16 +42,19 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-xl-2">
+                        <img src="{{ asset($course->thumbnail) }}" width="100">
+                    </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
                             <label>Demo Video Storage <b>(optional)</b></label>
                             <select class="storage select_js" name="demo_video_storage"
                                 class="@error('demo_video_storage') border border-danger @enderror">
                                 <option value=""> Please Select </option>
-                                <option value="upload"> Upload </option>
-                                <option value="youtube"> Youtube </option>
-                                <option value="vimeo"> Vimeo </option>
-                                <option value="external_link"> External Link </option>
+                                <option @selected($course->demo_video_storage == 'upload') value="upload"> Upload </option>
+                                <option @selected($course->demo_video_storage == 'youtube') value="youtube"> Youtube </option>
+                                <option @selected($course->demo_video_storage == 'vimeo') value="vimeo"> Vimeo </option>
+                                <option @selected($course->demo_video_storage == 'external_link') value="external_link"> External Link </option>
                             </select>
                             @error('demo_video_storage')
                                 <div class="text-danger">{{ $message }}</div>
@@ -56,7 +62,8 @@
                         </div>
                     </div>
                     <div class="col-xl-6">
-                        <div class="add_course_basic_info_imput upload_source">
+                        <div
+                            class="add_course_basic_info_imput upload_source {{ $course->demo_video_storage == 'upload' ? '' : 'd-none' }}">
                             <label>Path</label>
                             <div class="input-group">
                                 <span class="input-group-btn">
@@ -71,9 +78,11 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="add_course_basic_info_imput external_source d-none">
+                        <div
+                            class="add_course_basic_info_imput external_source {{ $course->demo_video_storage != 'upload' ? '' : 'd-none' }}">
                             <label>Path</label>
                             <input type="text" name="url" class="source_input"
+                                value="{{ $course->demo_video_source ?? old('source_input') }}"
                                 class="@error('url') border border-danger @enderror">
                             @error('url')
                                 <div class="text-danger">{{ $message }}</div>
@@ -86,6 +95,7 @@
                         <div class="add_course_basic_info_imput">
                             <label>Price <code>*</code></label>
                             <input type="text" placeholder="Price" name="price"
+                                value="{{ $course->price ?? old('price') }}"
                                 class="@error('price') border border-danger @enderror">
                             <p>Put 0 for free</p>
                             @error('price')
@@ -97,6 +107,7 @@
                         <div class="add_course_basic_info_imput">
                             <label>Discount Price</label>
                             <input type="text" placeholder="Discount Price" name="discount"
+                                value="{{ $course->discount ?? old('discount') }}"
                                 class="@error('discount') border border-danger @enderror">
                             @error('discount')
                                 <div class="text-danger">{{ $message }}</div>
@@ -107,7 +118,7 @@
                         <div class="add_course_basic_info_imput mb-0">
                             <label>Description</label>
                             <textarea rows="8" placeholder="Description" name="description" class="editor"
-                                class="@error('description') border border-danger @enderror"></textarea>
+                                class="@error('description') border border-danger @enderror">{!! $course->description ?? old('description') !!}</textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -123,7 +134,7 @@
 @push('js-link')
     <script>
         $(document).ready(function() {
-            $('.basic_info_form').on('submit', function(e) {
+            $('.basic_info_update_form').on('submit', function(e) {
                 e.preventDefault();
 
                 // Clear previous errors

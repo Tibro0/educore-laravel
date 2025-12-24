@@ -11,7 +11,8 @@
                     <div class="col-xl-6">
                         <div class="add_course_more_info_input">
                             <label>Capacity</label>
-                            <input type="text" placeholder="Capacity" name="capacity">
+                            <input type="text" placeholder="Capacity" name="capacity"
+                                value="{{ @$course->capacity ?? old('capacity') }}">
                             <div class="text-danger capacity"></div>
                             <p>leave blank for unlimited</p>
                         </div>
@@ -19,20 +20,21 @@
                     <div class="col-xl-6">
                         <div class="add_course_more_info_input">
                             <label>Course Duration (Minutes)<code>*</code></label>
-                            <input type="text" placeholder="300" name="duration">
+                            <input type="text" placeholder="300" name="duration"
+                                value="{{ @$course->duration ?? old('duration') }}">
                             <div class="text-danger duration"></div>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_more_info_checkbox">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="qna" value="1"
-                                    id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" name="qna" @checked($course?->qna === 1)
+                                    value="1" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">Q&A</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="certificate" value="1"
-                                    id="flexCheckDefault2">
+                                <input class="form-check-input" type="checkbox" name="certificate"
+                                    @checked(@$course->certificate === 1) value="1" id="flexCheckDefault2">
                                 <label class="form-check-label" for="flexCheckDefault2">Completion Certificate</label>
                             </div>
                             <div class="text-danger qna"></div>
@@ -47,11 +49,13 @@
                                     @if ($category->subCategories->isNotEmpty())
                                         <optgroup label="{{ $category->name }}">
                                             @foreach ($category->subCategories as $subCategory)
-                                                <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                                                <option @selected(@$course->category_id == $subCategory->id) value="{{ @$subCategory->id }}">
+                                                    {{ @$subCategory->name }}</option>
                                             @endforeach
                                         </optgroup>
                                     @endif
                                 @endforeach
+
                             </select>
                             <div class="text-danger category"></div>
                         </div>
@@ -61,10 +65,10 @@
                             <h3>Level</h3>
                             @foreach ($levels as $level)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="{{ $level->id }}"
-                                        name="level" id="id-{{ $level->id }}">
-                                    <label class="form-check-label" for="id-{{ $level->id }}">
-                                        {{ $level->name }}
+                                    <input class="form-check-input" type="radio" @checked(@$level->id == $course->course_level_id)
+                                        value="{{ @$level->id }}" name="level" id="id-{{ @$level->id }}">
+                                    <label class="form-check-label" for="id-{{ @$level->id }}">
+                                        {{ @$level->name }}
                                     </label>
                                 </div>
                             @endforeach
@@ -76,10 +80,10 @@
                             <h3>Language</h3>
                             @foreach ($languages as $language)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="{{ $language->id }}"
-                                        name="language" id="id-{{ $language->id }}">
-                                    <label class="form-check-label" for="id-{{ $language->id }}">
-                                        {{ $language->name }}
+                                    <input class="form-check-input" @checked(@$language->id == @$course->course_language_id) type="radio"
+                                        name="language" value="{{ @$language->id }}" id="id-{{ @$language->id }}">
+                                    <label class="form-check-label" for="id-{{ @$language->id }}">
+                                        {{ @$language->name }}
                                     </label>
                                 </div>
                             @endforeach

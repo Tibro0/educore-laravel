@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-     <!--===========================
-        BREADCRUMB START
-    ============================-->
-    <section class="wsus__breadcrumb" style="background: url({{asset('frontend/assets/images/breadcrumb_bg.jpg')}});">
+    <!--===========================
+                    BREADCRUMB START
+                ============================-->
+    <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
                 <div class="row">
@@ -16,7 +16,7 @@
                         <div class="wsus__breadcrumb_text">
                             <h1>Instructor All Courses</h1>
                             <ul>
-                                <li><a href="{{route('home')}}">Home</a></li>
+                                <li><a href="{{ route('home') }}">Home</a></li>
                                 <li>Instructor All Courses</li>
                             </ul>
                         </div>
@@ -26,13 +26,13 @@
         </div>
     </section>
     <!--===========================
-        BREADCRUMB END
-    ============================-->
+                    BREADCRUMB END
+                ============================-->
 
 
     <!--===========================
-        DASHBOARD COURSE START
-    ============================-->
+                    DASHBOARD COURSE START
+                ============================-->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -43,7 +43,7 @@
                             <div class="wsus__dashboard_heading relative">
                                 <h5>Courses</h5>
                                 <p>Manage your courses and its update like live, draft and insight.</p>
-                                <a class="common_btn" href="{{route('instructor.courses.create')}}">+ add course</a>
+                                <a class="common_btn" href="{{ route('instructor.courses.create') }}">+ add course</a>
                             </div>
                         </div>
 
@@ -84,99 +84,40 @@
                                                         ACTION
                                                     </th>
                                                 </tr>
-                                                <tr>
-                                                    <td class="image">
-                                                        <div class="image_category">
-                                                            <img src="images/courses_3_img_1.jpg" alt="img"
-                                                                class="img-fluid w-100">
-                                                        </div>
-                                                    </td>
-                                                    <td class="details">
-                                                        <p class="rating">
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                                            <i class="far fa-star" aria-hidden="true"></i>
-                                                            <span>(5.0)</span>
-                                                        </p>
-                                                        <a class="title" href="#">Complete Blender Creator Learn
-                                                            3D Modelling.</a>
-
-                                                    </td>
-                                                    <td class="sale">
-                                                        <p>3400</p>
-                                                    </td>
-                                                    <td class="status">
-                                                        <p class="active">Active</p>
-                                                    </td>
-                                                    <td class="action">
-                                                        <a class="edit" href="#"><i class="far fa-edit"></i></a>
-                                                        <a class="del" href="#"><i class="fas fa-trash-alt"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="image">
-                                                        <div class="image_category">
-                                                            <img src="images/courses_3_img_2.jpg" alt="img"
-                                                                class="img-fluid w-100">
-                                                        </div>
-                                                    </td>
-                                                    <td class="details">
-                                                        <p class="rating">
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                                            <i class="far fa-star" aria-hidden="true"></i>
-                                                            <span>(5.0)</span>
-                                                        </p>
-                                                        <a class="title" href="#">Complete Blender Creator Learn
-                                                            3D Modelling.</a>
-
-                                                    </td>
-                                                    <td class="sale">
-                                                        <p>5400</p>
-                                                    </td>
-                                                    <td class="status">
-                                                        <p class="Pending">Pending</p>
-                                                    </td>
-                                                    <td class="action">
-                                                        <a class="edit" href="#"><i class="far fa-edit"></i></a>
-                                                        <a class="del" href="#"><i class="fas fa-trash-alt"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="image">
-                                                        <div class="image_category">
-                                                            <img src="images/courses_3_img_3.jpg" alt="img"
-                                                                class="img-fluid w-100">
-                                                        </div>
-                                                    </td>
-                                                    <td class="details">
-                                                        <p class="rating">
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star" aria-hidden="true"></i>
-                                                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                                            <i class="far fa-star" aria-hidden="true"></i>
-                                                            <span>(5.0)</span>
-                                                        </p>
-                                                        <a class="title" href="#">Complete Blender Creator Learn
-                                                            3D Modelling.</a>
-
-                                                    </td>
-                                                    <td class="sale">
-                                                        <p>34</p>
-                                                    </td>
-                                                    <td class="status">
-                                                        <p class="delete">Deleted</p>
-                                                    </td>
-                                                    <td class="action">
-                                                        <a class="edit" href="#"><i class="far fa-edit"></i></a>
-                                                        <a class="del" href="#"><i class="fas fa-trash-alt"></i></a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($courses as $course)
+                                                    <tr>
+                                                        <td class="image">
+                                                            <div class="image_category">
+                                                                <img src="{{ asset($course->thumbnail) }}" alt="img"
+                                                                    class="img-fluid w-100">
+                                                            </div>
+                                                        </td>
+                                                        <td class="details">
+                                                            <p class="rating">
+                                                                <i class="fas fa-star" aria-hidden="true"></i>
+                                                                <i class="fas fa-star" aria-hidden="true"></i>
+                                                                <i class="fas fa-star" aria-hidden="true"></i>
+                                                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                                                <i class="far fa-star" aria-hidden="true"></i>
+                                                                <span>(5.0)</span>
+                                                            </p>
+                                                            <a class="title" href="#">{{ $course->title }}</a>
+                                                        </td>
+                                                        <td class="sale">
+                                                            <p>3400</p>
+                                                        </td>
+                                                        <td class="status">
+                                                            <p class="active">Active</p>
+                                                        </td>
+                                                        <td class="action">
+                                                            <a class="edit"
+                                                                href="{{ route('instructor.courses.edit', ['id' => $course->id, 'step' => 1]) }}"><i
+                                                                    class="far fa-edit"></i></a>
+                                                            <a class="del" href="#"><i
+                                                                    class="fas fa-trash-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -189,7 +130,6 @@
         </div>
     </section>
     <!--===========================
-        DASHBOARD COURSE END
-    ============================-->
-
+                    DASHBOARD COURSE END
+                ============================-->
 @endsection
