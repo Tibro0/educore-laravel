@@ -2,7 +2,7 @@
 
 @section('course_content')
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-        <div class="add_course_basic_info course-form">
+        <div class="add_course_basic_info">
             <form action="{{ route('instructor.courses.sore-basic-info') }}" method="POST" class="basic_info_form course-form"
                 enctype="multipart/form-data">
                 @csrf
@@ -41,46 +41,32 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
-                            <label>Demo Video Storage <b>(optional)</b></label>
-                            <select class="storage select_js" name="demo_video_storage"
-                                class="@error('demo_video_storage') border border-danger @enderror">
+                            <label for="#">Demo Video Storage <b>(optional)</b></label>
+                            <select class="select_js storage" name="demo_video_storage">
                                 <option value=""> Please Select </option>
                                 <option value="upload"> Upload </option>
                                 <option value="youtube"> Youtube </option>
                                 <option value="vimeo"> Vimeo </option>
                                 <option value="external_link"> External Link </option>
                             </select>
-                            @error('demo_video_storage')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput upload_source">
-                            <label>Path</label>
+                            <label for="#">Path</label>
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                                         <i class="fa fa-picture-o"></i> Choose
                                     </a>
                                 </span>
-                                <input id="thumbnail" class="form-control source_input" type="text" name="file"
-                                    class="@error('file') border border-danger @enderror">
-                                @error('file')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <input id="thumbnail" class="form-control source_input" type="text" name="file">
                             </div>
                         </div>
                         <div class="add_course_basic_info_imput external_source d-none">
-                            <label>Path</label>
-                            <input type="text" name="url" class="source_input"
-                                class="@error('url') border border-danger @enderror">
-                            @error('url')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <label for="#">Path</label>
+                            <input type="text" name="url" class="source_input">
                         </div>
-
-
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
@@ -205,6 +191,20 @@
                         submitBtn.prop('disabled', false).text(originalText);
                     }
                 });
+            });
+
+            // show hide path input depending on source
+            $(document).on('change', '.storage', function() {
+                let value = $(this).val();
+                $('.source_input').val('');
+
+                if (value == 'upload') {
+                    $('.upload_source').removeClass('d-none');
+                    $('.external_source').addClass('d-none');
+                } else {
+                    $('.upload_source').addClass('d-none');
+                    $('.external_source').removeClass('d-none');
+                }
             });
         });
     </script>

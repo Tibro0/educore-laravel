@@ -15,19 +15,19 @@ Route::get('tibro', function () {
 ////////////////////////////////
 
 /**
- * Frontend Route Start
+ * Frontend Routes Start
  */
 Route::controller(FrontendController::class)->group(function () {
     Route::get('', 'index')->name('home');
     Route::get('frontend-register-list-style', 'frontendRegisterListStyle')->name('frontend-register-list-style');
 });
 /**
- * Frontend Route End
+ * Frontend Routes End
  */
 
 /**
  * -------------------------------------------------------------------------------------------------
- * Student Routs Start
+ * Student Routes Start
  * -------------------------------------------------------------------------------------------------
  */
 Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:student'], 'prefix' => 'student', 'as' => 'student.'], function () {
@@ -48,13 +48,13 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:student'], 'pr
 });
 /**
  * ----------------------------------------------------------------------------------------------------
- * Student Routs End
+ * Student Routes End
  * ---------------------------------------------------------------------------------------------------
  */
 
 /**
  * -----------------------------------------------------------------------------------------------------
- * Instructor Routs Start
+ * Instructor Routes Start
  * ----------------------------------------------------------------------------------------------------
  */
 Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 'prefix' => 'instructor', 'as' => 'instructor.'], function () {
@@ -79,10 +79,15 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 
         Route::get('courses/edit/{id}', 'edit')->name('courses.edit');
         Route::post('courses/update', 'update')->name('courses.update');
     });
+
+    /** Laravel File Manager Routes */
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });
 /**
  * ---------------------------------------------------------------------------------------------------
- * Instructor Routs End
+ * Instructor Routes End
  * ------------------------------------------------------------------------------------------------------
  */
 

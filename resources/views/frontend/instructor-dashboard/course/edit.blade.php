@@ -47,24 +47,20 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
-                            <label>Demo Video Storage <b>(optional)</b></label>
-                            <select class="storage select_js" name="demo_video_storage"
-                                class="@error('demo_video_storage') border border-danger @enderror">
+                            <label for="#">Demo Video Storage <b>(optional)</b></label>
+                            <select class="select_js storage" name="demo_video_storage">
                                 <option value=""> Please Select </option>
                                 <option @selected($course->demo_video_storage == 'upload') value="upload"> Upload </option>
                                 <option @selected($course->demo_video_storage == 'youtube') value="youtube"> Youtube </option>
                                 <option @selected($course->demo_video_storage == 'vimeo') value="vimeo"> Vimeo </option>
                                 <option @selected($course->demo_video_storage == 'external_link') value="external_link"> External Link </option>
                             </select>
-                            @error('demo_video_storage')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div
                             class="add_course_basic_info_imput upload_source {{ $course->demo_video_storage == 'upload' ? '' : 'd-none' }}">
-                            <label>Path</label>
+                            <label for="#">Path</label>
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
@@ -72,21 +68,14 @@
                                     </a>
                                 </span>
                                 <input id="thumbnail" class="form-control source_input" type="text" name="file"
-                                    class="@error('file') border border-danger @enderror">
-                                @error('file')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                    value="{{ $course->demo_video_source }}">
                             </div>
                         </div>
                         <div
                             class="add_course_basic_info_imput external_source {{ $course->demo_video_storage != 'upload' ? '' : 'd-none' }}">
-                            <label>Path</label>
+                            <label for="#">Path</label>
                             <input type="text" name="url" class="source_input"
-                                value="{{ $course->demo_video_source ?? old('source_input') }}"
-                                class="@error('url') border border-danger @enderror">
-                            @error('url')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                value="{{ $course->demo_video_source }}">
                         </div>
 
 
@@ -132,6 +121,13 @@
 @endsection
 
 @push('js-link')
+    {{-- Laravel file Manager Start --}}
+    <script script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script>
+        $('#lfm').filemanager('file');
+    </script>
+    {{-- Laravel file Manager End --}}
+
     <script>
         $(document).ready(function() {
             $('.basic_info_update_form').on('submit', function(e) {
@@ -216,6 +212,20 @@
                         submitBtn.prop('disabled', false).text(originalText);
                     }
                 });
+            });
+
+            // show hide path input depending on source
+            $(document).on('change', '.storage', function() {
+                let value = $(this).val();
+                $('.source_input').val('');
+
+                if (value == 'upload') {
+                    $('.upload_source').removeClass('d-none');
+                    $('.external_source').addClass('d-none');
+                } else {
+                    $('.upload_source').addClass('d-none');
+                    $('.external_source').removeClass('d-none');
+                }
             });
         });
     </script>
