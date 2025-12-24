@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CourseLanguage;
+use App\Models\CourseLevel;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,17 +64,56 @@ class CourseController extends Controller
         ]);
     }
 
-    function edit(Request $request)
+    public function edit(Request $request)
     {
-
         switch ($request->step) {
             case '1':
 
                 break;
 
             case '2':
-                $categories = CourseCategory::where(['status' => 1])->get();
-                return view('frontend.instructor-dashboard.course.more-info', compact('categories'));
+                $categories = CourseCategory::where(['status' => 1])->orderBy('id', 'DESC')->get();
+                $levels = CourseLevel::orderBy('id', 'DESC')->get();
+                $languages = CourseLanguage::orderBy('id', 'DESC')->get();
+                return view('frontend.instructor-dashboard.course.more-info', compact('categories', 'levels', 'languages'));
+                break;
+        }
+    }
+
+    public function update(Request $request)
+    {
+        switch ($request->current_step) {
+            case '1':
+                # code...
+                break;
+
+            case '2':
+                $request->validate([
+                    'capacity' => ['nullable', 'numeric'],
+                    'duration' => ['required', 'numeric'],
+                    'qna' => ['nullable', 'boolean'],
+                    'certificate' => ['nullable', 'boolean'],
+                    'category' => ['required', 'integer'],
+                    'level' => ['required', 'integer'],
+                    'language' => ['required', 'integer'],
+                ]);
+
+                // update course data
+                $course = Course::findOrFail($request->id);
+                $course->capacity = $request->capacity;
+                $course->duration = $request->duration;
+                $course->qna = $request->qna ? 1 : 0;
+                $course->certificate = $request->certificate ? 1 : 0;
+                $course->category_id = $request->category;
+                $course->course_level_id = $request->level;
+                $course->course_language_id = $request->language;
+                $course->save();
+
+                return response([
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'redirect' => route('instructor.courses.edit', ['id' => $course->id, 'step' => $request->next_step])
+                ]);
                 break;
         }
     }
