@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
-                            <label for="#">Demo Video Storage <b>(optional)</b></label>
+                            <label>Demo Video Storage <b>(optional)</b></label>
                             <select class="select_js storage" name="demo_video_storage">
                                 <option value=""> Please Select </option>
                                 <option @selected($course->demo_video_storage == 'upload') value="upload"> Upload </option>
@@ -60,7 +60,7 @@
                     <div class="col-xl-6">
                         <div
                             class="add_course_basic_info_imput upload_source {{ $course->demo_video_storage == 'upload' ? '' : 'd-none' }}">
-                            <label for="#">Path</label>
+                            <label>Path</label>
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
@@ -73,12 +73,10 @@
                         </div>
                         <div
                             class="add_course_basic_info_imput external_source {{ $course->demo_video_storage != 'upload' ? '' : 'd-none' }}">
-                            <label for="#">Path</label>
+                            <label>Path</label>
                             <input type="text" name="url" class="source_input"
                                 value="{{ $course->demo_video_source }}">
                         </div>
-
-
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">

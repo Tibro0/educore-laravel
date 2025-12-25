@@ -100,14 +100,16 @@ class CourseController extends Controller
 
                 $course = Course::findOrFail($request->id);
 
+
                 $thumbnailPath = $this->updateImage($request, 'thumbnail', 'uploads/course_thumbnail_image', $course->thumbnail);
+
 
                 $course->title = $request->title;
                 $course->slug = Str::slug($request->title);
                 $course->seo_description = $request->seo_description;
                 $course->thumbnail = empty(!$thumbnailPath) ? $thumbnailPath : $course->thumbnail;
                 $course->demo_video_storage = $request->demo_video_storage;
-                $course->demo_video_source = $request->demo_video_source;
+                $course->demo_video_source = $request->filled('file') ? $request->file : $request->url;
                 $course->price = $request->price;
                 $course->discount = $request->discount;
                 $course->description = $request->description;
