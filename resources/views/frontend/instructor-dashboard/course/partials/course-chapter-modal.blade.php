@@ -10,6 +10,9 @@
                 <div class="col-md-12">
                     <label class="form-label">Title <span class="text-danger">*</span></label>
                     <input type="text" name="title" class="form-control" placeholder="Title" required>
+                    @error('title')
+                    <div class="text-danger">{{$message}}</div>
+                    @enderror
                 </div>
                 <div class="col-md-12">
                     <button type="submit" class="common_btn">Save Changes</button>

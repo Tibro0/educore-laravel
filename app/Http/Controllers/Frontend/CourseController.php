@@ -158,6 +158,13 @@ class CourseController extends Controller
                     'message' => 'Updated successfully.',
                     'redirect' => route('instructor.courses.edit', ['id' => $course->id, 'step' => $request->next_step])
                 ]);
+
+            case '3':
+                return response([
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'redirect' => route('instructor.courses.edit', ['id' => $request->id, 'step' => $request->next_step])
+                ]);
                 break;
         }
     }

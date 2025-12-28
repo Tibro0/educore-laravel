@@ -27,6 +27,10 @@ class CourseContentController extends Controller
         $chapter->order = CourseChapter::where(['course_id' => $courseId])->count() + 1;
         $chapter->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('toast', [
+            'type' => 'success',
+            'title' => 'Success',
+            'message' => 'Chapter Created Successfully!'
+        ]);;
     }
 }

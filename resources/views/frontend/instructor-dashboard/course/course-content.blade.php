@@ -2,9 +2,16 @@
 
 @section('course_content')
     <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+        <form action="{{ route('instructor.courses.update') }}" method="POST" class="course-form more_info_form">
+            @csrf
+            <input type="hidden" name="id" value="{{ request()?->id }}">
+            <input type="hidden" name="current_step" value="3">
+            <input type="hidden" name="next_step" value="4">
+        </form>
         <div class="add_course_content">
             <div class="add_course_content_btn_area d-flex flex-wrap justify-content-between">
-                <a class="common_btn dynamic-modal-btn" href="javascript:;" data-id="{{ $courseId }}">Add New Chapter</a>
+                <a class="common_btn dynamic-modal-btn" href="javascript:;" data-id="{{ $courseId }}">Add New
+                    Chapter</a>
                 <a class="common_btn" href="javascript:;">Short Chapter</a>
             </div>
             <div class="accordion" id="accordionExample">
@@ -315,6 +322,36 @@
 
 @push('js-link')
     <script>
+        $(document).ready(function() {
+            $('.more_info_form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+
+                $.ajax({
+                    method: "POST",
+                    url: $(this).attr('action'),
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            toastr.success(data.message || 'Saved Successfully!');
+
+                            if (data.redirect) {
+                                setTimeout(() => {
+                                    window.location.href = data.redirect;
+                                }, 1500);
+                            }
+                        } else {
+                            toastr.error(data.message || 'Failed to save');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
         var loader = `
         <div class="modal-content text-center p-3" style="display:inline">
             <div class="spinner-border" role="status">
@@ -342,7 +379,7 @@
                     $('.dynamic-modal-content').html(data);
                 },
                 error: function(xhr, status, error) {
-
+                    $('#dynamic-modal').modal('show');
                 }
             });
         })
