@@ -80,6 +80,11 @@ class CourseController extends Controller
                 $course = Course::findOrFail($request->id);
                 return view('frontend.instructor-dashboard.course.more-info', compact('categories', 'levels', 'languages', 'course'));
                 break;
+
+            case '3':
+                $courseId = $request->id;
+                return view('frontend.instructor-dashboard.course.course-content', compact('courseId'));
+                break;
         }
     }
 

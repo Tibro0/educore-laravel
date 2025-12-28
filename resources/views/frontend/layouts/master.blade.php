@@ -53,6 +53,7 @@
     @include('frontend.layouts.footer')
     {{-- Footer End --}}
 
+    @stack('modal')
 
     <!--================================
         SCROLL BUTTON START

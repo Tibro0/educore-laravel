@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
@@ -78,6 +79,11 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 
         Route::post('courses/create', 'storeBasicInfo')->name('courses.sore-basic-info');
         Route::get('courses/edit/{id}', 'edit')->name('courses.edit');
         Route::post('courses/update', 'update')->name('courses.update');
+    });
+
+    Route::controller(CourseContentController::class)->group(function(){
+        Route::get('course-content/create-chapter/{course}', 'createChapterModal')->name('course-content.create-chapter');
+        Route::post('course-content/create-chapter/{course}', 'storeChapter')->name('course-content.store-chapter');
     });
 
     /** Laravel File Manager Routes */
