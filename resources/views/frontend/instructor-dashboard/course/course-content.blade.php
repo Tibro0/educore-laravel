@@ -19,7 +19,8 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse-{{$chapter->id}}" aria-expanded="true" aria-controls="collapse-{{$chapter->id}}">
+                                data-bs-target="#collapse-{{ $chapter->id }}" aria-expanded="true"
+                                aria-controls="collapse-{{ $chapter->id }}">
                                 <span>{{ $chapter->title }}</span>
                             </button>
                             <div class="add_course_content_action_btn">
@@ -29,18 +30,21 @@
                                         <i class="far fa-plus"></i>
                                     </div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item" href="#">Add Lesson</a>
+                                        <li><a class="dropdown-item add_lesson"
+                                                href="javascript:;" data-chapter-id="{{ $chapter->id }}"
+                                                data-course-id="{{ $chapter->course_id }}">Add Lesson</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="#">Add Document</a>
+                                        <li><a class="dropdown-item" href="javascript:;">Add Document</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="#">Add Quiz</a></li>
+                                        <li><a class="dropdown-item" href="javascript:;">Add Quiz</a></li>
                                     </ul>
                                 </div>
                                 <a class="edit" href="#"><i class="far fa-edit"></i></a>
                                 <a class="del" href="#"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </h2>
-                        <div id="collapse-{{$chapter->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapse-{{ $chapter->id }}" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul class="item_list">
                                     <li>
@@ -200,5 +204,32 @@
                 }
             });
         })
+    </script>
+    <script>
+        // Add Lesson
+        $(document).ready(function() {
+            $('.add_lesson').on('click', function(e) {
+                e.preventDefault();
+
+                $('#dynamic-modal').modal('show');
+                let courseId = $(this).data('course-id');
+                let chapterId = $(this).data('chapter-id');
+
+                $.ajax({
+                    method: "GET",
+                    url: "{{ route('instructor.course-content.create-lesson') }}",
+                    data: {
+                        'course_id': courseId,
+                        'chapter_id': chapterId
+                    },
+                    beforeSend: function() {
+                        $('.dynamic-modal-content').html(loader);
+                    },
+                    success: function(data) {
+                        $('.dynamic-modal-content').html(data);
+                    }
+                });
+            })
+        });
     </script>
 @endpush

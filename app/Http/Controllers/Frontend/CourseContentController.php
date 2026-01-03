@@ -33,4 +33,11 @@ class CourseContentController extends Controller
             'message' => 'Chapter Created Successfully!'
         ]);;
     }
+
+    public function createLesson(Request $request)
+    {
+        $courseId = $request->course_id;
+        $chapterId = $request->chapter_id;
+        return view('frontend.instructor-dashboard.course.partials.chapter-lesson-modal', compact('courseId', 'chapterId'))->render();
+    }
 }

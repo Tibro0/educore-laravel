@@ -84,6 +84,8 @@ Route::group(['middleware' => ['auth:web', 'verified', 'checkRole:instructor'], 
     Route::controller(CourseContentController::class)->group(function(){
         Route::get('course-content/create-chapter/{course}', 'createChapterModal')->name('course-content.create-chapter');
         Route::post('course-content/create-chapter/{course}', 'storeChapter')->name('course-content.store-chapter');
+
+        Route::get('course-content/create-lesson', 'createLesson')->name('course-content.create-lesson');
     });
 
     /** Laravel File Manager Routes */
